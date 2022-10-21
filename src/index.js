@@ -3,20 +3,19 @@ import { fetchCountries } from './fetchCountries';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
-const DEBOUNCE_DELAY = 300;
-
 const refs = {
     input: document.querySelector('#search-box'),
     list: document.querySelector('.country-list'),
     div: document.querySelector('.country-info')
 };
 
+const DEBOUNCE_DELAY = 300;
 refs.input.addEventListener('input', debounce(onInputValue, DEBOUNCE_DELAY));
 
 function onInputValue(e) {
     let inputValue = e.target.value.trim();
 
-    cleanHtml();  
+    cleanInnerHTML();  
 
     if (inputValue === '') {
       return;
@@ -31,40 +30,37 @@ function onInputValue(e) {
 
 function renderCountryCard(country) {
     if (country.length >= 10) {
-      Notiflix.Notify.info('Too many matches found. Please enter a more specific name.'
-      );
+        Notiflix.Notify.info('Too many matches found. Please enter a more specific name.'
+    );
     return;
     }
 
     if (country.length >= 2 && country.length < 10) {
-        const img = country
-          .map(
-            elem =>
-              `<li><img class="img" src = ${elem.flags.svg} alt = ${elem.name} width = 50> <span class="text-title">${elem.name}</span> </li>`
-          )
-          .join('');
-        refs.list.innerHTML = img;
+        const cards = country.map(elem =>
+            `<li><img class="img" src = ${elem.flags.svg} alt = ${elem.name} width = 50> <span class="text">${elem.name}</span> </li>`
+        )
+        refs.list.innerHTML = cards;
     }
 
     if (country.length === 1) {
-        let leng = country.map(el => {
-           return el.languages.map(element => element.name).join(', ')
-        })
+        let leng = country.map(el => el.languages.map(element => element.name).join(', '))
 
-        const img = country
-            .map(elem =>
-            `<img class="img" src = ${elem.flags.svg} alt = ${elem.name} width = 50> 
-            <span class="text-title">${elem.name}</span><br>
-            <span class="title">capital:</span> <span class="text">${elem.capital}</span><br>
-            <span class="title">population:</span> <span class="text">${elem.population}</span><br>
-            <span class="title">languages:</span> <span class="text">${leng}</span>
-            `
-            )
-            .join('');
-    refs.div.innerHTML = img;
+        const card = country.map( elem =>
+            `<div class="card">
+            <img class="img" src = ${elem.flags.svg} alt = ${elem.name} width = 50> 
+            <span class="text-title">${elem.name}</span>
+            <ul>
+            <li class="item"> capital: <span class="text">${elem.capital}</span></li>
+            <li class="item"> population: <span class="text">${elem.population}</span></li>
+            <li class="item"> languages: <span class="text">${leng}</span></li>
+            </ul>
+            </div>`
+        )
+        refs.div.innerHTML = card;
     }
 }
-function cleanHtml() {
+
+function cleanInnerHTML() {
   refs.list.innerHTML = '';
   refs.div.innerHTML = '';
 }
