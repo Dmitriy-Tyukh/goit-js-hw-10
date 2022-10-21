@@ -1,5 +1,5 @@
 {
-  "name": "goit-js-hw-10",
+  "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
   "homepage": "https://Dmitriy-Tyukh.github.io/goit-js-hw-10",
@@ -15,7 +15,7 @@
   "author": "Dmitriy-Tyukh <tyuhdima@ukr.net>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Dmitriy-Tyukh/goit-js-hw-10"
+    "url": "https://github.com/Dmitriy-Tyukh/goit-js-hw-10.git/issues"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
